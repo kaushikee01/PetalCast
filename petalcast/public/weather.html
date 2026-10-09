@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PetalCast</title>
+
+<!-- Fonts (needs internet; falls back to system fonts if offline) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body data-mood="home">
+<div class="app">
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <button class="brand" id="brand" aria-label="PetalCast home">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#ff8fc0">
+          <ellipse cx="16" cy="8" rx="5" ry="7"/>
+          <ellipse cx="16" cy="8" rx="5" ry="7" transform="rotate(72 16 16)"/>
+          <ellipse cx="16" cy="8" rx="5" ry="7" transform="rotate(144 16 16)"/>
+          <ellipse cx="16" cy="8" rx="5" ry="7" transform="rotate(216 16 16)"/>
+          <ellipse cx="16" cy="8" rx="5" ry="7" transform="rotate(288 16 16)"/>
+        </g>
+        <circle cx="16" cy="16" r="4" fill="#ffe27a"/>
+      </svg>
+      PetalCast
+    </button>
+    <div class="units" role="group" aria-label="Units">
+      <button id="unit-c" aria-pressed="true">°C, km/h</button>
+      <button id="unit-f" aria-pressed="false">°F, mph</button>
+    </div>
+  </header>
+
+  <!-- ===== Search ===== -->
+  <form class="search" id="search-form" role="search" autocomplete="off">
+    <label class="sr-only" for="city">Search for a city</label>
+    <input id="city" type="search" placeholder="Search for a city" aria-describedby="status-live">
+    <button class="btn" type="submit">Search</button>
+    <button class="btn ghost" type="button" id="locate" aria-label="Use my current location">
+      📍<span class="label"> Use my location</span>
+    </button>
+    <ul class="suggestions" id="suggestions" hidden></ul>
+  </form>
+
+  <!-- Screen readers hear status changes here -->
+  <div class="sr-only" id="status-live" aria-live="polite"></div>
+
+  <!-- ===== States ===== -->
+  <div class="status error" id="error" role="alert" hidden></div>
+
+  <div class="status" id="loading" hidden>
+    <div class="spinner"></div>
+    <p>Fetching the sky…</p>
+  </div>
+
+  <!-- ===== HOME SCREEN ===== -->
+  <main id="home">
+    <section class="home-hero">
+      <h1 id="greeting">Hello</h1>
+      <p>Check the sky anywhere, plan your outfit, and see how the air feels before you step out.</p>
+      <div class="panel tip">
+        <div class="emoji" aria-hidden="true">💡</div>
+        <div>
+          <strong>Did you know?</strong>
+          <span id="tip-text"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="recent-sec" hidden>
+      <div class="section-head">
+        <h2>Recent searches</h2>
+        <button class="link-btn" id="clear-recent">Clear</button>
+      </div>
+      <div class="chips" id="recent-chips"></div>
+    </section>
+
+    <section class="section" id="saved-sec" hidden>
+      <h2>Your saved places</h2>
+      <div class="cards" id="saved-grid"></div>
+    </section>
+
+    <section class="section">
+      <h2>Right now around the world</h2>
+      <div class="cards" id="world-grid"></div>
+    </section>
+  </main>
+
+  <!-- ===== WEATHER SCREEN (filled in by JavaScript) ===== -->
+  <main id="weather" hidden>
+    <button class="link-btn back" id="back">← All cities</button>
+
+    <section class="hero" aria-label="Current weather">
+      <div>
+        <div class="place" id="place"></div>
+        <div class="sub" id="local-time"></div>
+        <div class="temp" id="temp"></div>
+        <div class="cond" id="cond"></div>
+        <div class="hilo" id="hilo"></div>
+        <button class="btn ghost fav" id="fav" aria-pressed="false">☆ Save place</button>
+      </div>
+      <div class="hero-icon" id="hero-icon" aria-hidden="true"></div>
+    </section>
+
+    <section class="section">
+      <h2>PetalTips for today</h2>
+      <div class="tips" id="tips"></div>
+    </section>
+
+    <section class="section">
+      <h2>Next 24 hours</h2>
+      <div class="panel hourly" id="hourly"></div>
+    </section>
+
+    <section class="section">
+      <h2>Details</h2>
+      <div class="details" id="details"></div>
+    </section>
+
+    <section class="section">
+      <h2>Sunrise and sunset</h2>
+      <div class="panel sun" id="sun"></div>
+    </section>
+
+    <section class="section">
+      <h2>7-day forecast</h2>
+      <div class="panel daily" id="daily"></div>
+    </section>
+  </main>
+
+  <footer>
+    Weather and air quality data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+  </footer>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
